@@ -1,0 +1,403 @@
+@charset "UTF-8";
+
+body {
+	
+}
+.btn-primary {
+	background-color: #465165;
+	border: 1px solid #465165;
+}
+.btn-danger {
+	background-color: #f15a2b;
+}
+.row {
+	margin-left: 0;
+	margin-right: 0;	
+}
+.navbar {
+	background-color: #333;
+}
+.navbar-right li:last-child {
+    margin: 10px 10px 0 0;
+}
+.navbar {
+	background-color: #303133;
+}
+.navbar-brand.topNav {
+	color: #fff;
+}
+.nav.navbar-nav.navbar-right .dropdown .dropdown-toggle {
+	color: #fff;
+}
+
+.loginLogo {
+	text-align:center;
+	width: 200px;
+	height: auto;	
+}
+.authPanel {
+	background-color: #f7f7f7;	
+	padding: 3em;
+	border-top: 1px solid #ddd;
+}
+
+.authPanel h2 {
+	color: #aaa;
+	margin-bottom: 1em;	
+}
+
+.forgotLink {
+	margin: -1em 0.5em 1em 0;	
+	text-align: right;
+}
+
+#signupRegion {
+	border-left: 2px solid #FFF;	
+    border-style:groove;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+}
+	
+	
+#agentLogo {
+	height: 110px;
+	background: url(../images/logo.png) no-repeat center center;
+	background-size: 300px auto;
+}
+#agentBanner {
+	height: 110px;
+	text-align: center;
+	background: url(../images/Sacramento_banner.jpg) no-repeat right top;
+	background-size: 100% auto;
+}
+.nav-tabs {
+    border-bottom: 2px solid #455064;
+}
+.tab-content {
+	margin-bottom: 2em;	
+}
+
+.alert-danger {
+	background-color: #ffe3e3;
+	color:#2d2d2d;
+	border:none;	
+	padding: 1.4em 1.1em 1.1em 1.1em;
+	margin-bottom: 0;
+}
+.glyphicon-warning-sign {
+	font-size: 1.8em;
+	margin: -0.1em 0.5em 0 0.3em;
+	color: #9b0404;
+	vertical-align: middle;
+}
+#notificationBar, #mainTab {
+	margin: 1em;
+}
+
+#notificationBar .barWidth, #mainTab .tabWidth {
+	padding: 0;
+}
+#mainTab {
+	margin-bottom: 3em !important;
+}
+
+#mainTab li a{
+	color: #455064;
+} 
+#mainTab li a:hover{
+	background-color: #e4eaf4;
+	padding-bottom: 0.65em;
+} 
+#mainTab li.active a{
+	color: #FFFFFF;
+	background-color: #455064;
+} 
+#mainTab li.active a:hover{
+	background-color: #455064;
+} 
+#mainTab .glyphicon {
+	font-size: 1.2em;
+	margin-right: 0.2em;
+	vertical-align: middle;
+	margin-top: -0.2em;	
+}
+
+#parent, #child, #locator, #inbox {
+	background-color:#eee;
+	padding: 1em;	
+	margin: -7px;
+	border-radius: 0 0 10px 10px;
+}
+
+#copyrightInfo {
+	background-color: #303133;
+	text-align: center;
+	color: #fff;
+	font-size: 0.8em;
+	padding: 1em;
+		
+}
+
+.radio label, .checkbox label {
+	margin-right: 1em;	
+}
+
+#CodeRegion {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 1em 2em 2em 2em;	
+	color: #999;
+}
+
+.tab-content {
+	padding: 0.5em;	
+}
+.section-header {
+	font-size: 1.45em;
+    color: #455064;
+    border-bottom: 2px solid #455064;
+    padding-bottom: 0.5em;
+    font-weight: 300;
+    margin: 2em 0;
+    text-transform: uppercase;
+}
+
+.sub-section-header {
+	font-size: 1.2em;
+    color: #455064;
+    border-bottom: 2px solid #455064;
+    padding-bottom: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.tblList {
+	margin-top: 1em;
+	border-bottom: 1px solid #ccc;
+}
+
+.tblList .col-sm-11 {
+	padding-left: 0;
+}
+label {
+    line-height: 1.5em;
+    font-weight: 200;
+    color: #666;
+}
+
+.phone-number .col-xs-3, .phone-number .col-xs-4, .phone-number .col-xs-5, .zip-code .col-xs-4, .zip-code .col-xs-5{
+	margin-left: -15px;
+}
+.phone-number .col-xs-3::after{
+	 content: "-";
+	 position:absolute;
+	 right: 5px;
+	 color: #ccc;
+	 border: 0px solid;
+	 top: 5px;
+}
+.zip-code .col-xs-5::after{
+	 content: "-";
+	 position:absolute;
+	 right: 5px;
+	 color: #ccc;
+	 border: 0px solid;
+	 top: 5px;
+}
+
+
+#parent-thumbnails .glyphicon {
+	padding-right: 0.5em;
+	margin-top: 0.5em;
+	color: #666;	
+}
+
+.photoIcon {
+	padding-left: 0.6em;
+}
+
+.CAPCHA {
+	background-color: #fff;
+	padding: 5em;
+	margin-bottom: 2em;	
+	border: 1px solid #ddd;
+}
+
+.shadeBox {
+	background-color: #ffffff;
+	padding: 0.7em;
+	border-radius: 5px;	
+	text-align: center;
+}
+
+.mapHolder {
+	border: 2px solid #ccc;
+    margin: 1em 0;
+    padding: 0.5em;
+    background-color: #fff;
+}
+
+.searchResult td {
+	border-bottom: 1px solid #455064;
+	background-color: #FFFFFF;
+}
+
+.searchResult th {
+	background-color: #455064;
+	color: #fff;
+}
+
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+.inboxRegion {
+	background-color: #ffffff;
+	padding: 0.7em;
+	border-radius: 5px;	
+}
+.hiddenRow {
+    padding: 0 !important;
+}
+
+.emailTbl tr:hover {
+	background-color: #f7f7f7;
+	cursor: pointer;	
+}
+
+.emailTbl {
+	margin-top: 1em;	
+	background-color: #fff;
+}
+
+.emailTbl th{
+	background-color: #455064;	
+	color: #fff;
+} 
+
+.emailTbl tr{
+	background-color: #e8f3fe;
+} 
+
+
+.emailTbl th:hover{
+	background-color: #455064;	
+} 
+.emailTbl tr.unread {
+	font-weight: bold;	
+}
+
+.accordion-toggle td {
+	border-bottom: 1px solid #455064;
+}
+
+.emailMsg {
+	padding: 2em;	
+}
+
+.emailReply {
+	padding: 0 2em;	
+}
+.emailTbl tr.emailBody {
+	background-color: #FFFFFF;
+	cursor: default;	
+}
+.thread-odd {
+	background-color: #fff;	
+	padding: 2em;
+}
+.thread-even {
+	background-color: #f7f7f7;	
+	padding: 2em;
+}
+.thread-date {
+	font-weight: bold;
+	font-style:italic;
+	color:#999;	
+}
+.contantInfo {
+	margin-top: 1em;
+}
+
+@media screen and (max-width:599px){
+#agentBanner {
+	background-size: auto 100%;
+	background-position: left top;
+}
+#agentLogo {
+	background: url(../images/logo.jpg) no-repeat center center;
+	background-size: auto 100%;
+}
+}
+
+@media screen and (min-width:600px) and (max-width:899px){
+#loginRegion {
+	border-bottom: 2px solid #FFF;	
+    border-style:groove;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	margin-bottom: 2em;
+	padding-bottom: 2em;
+}
+.CAPCHA-new {
+	min-height: 180px; 
+	padding-top: 160px;
+}
+
+#agentBanner {
+	background-size: auto 100% ;
+}
+#agentLogo {
+	background: url(../images/logo.jpg) no-repeat center center;
+	background-size: auto 100%;
+}
+}
+
+@media screen and (min-width:900px) and (max-width:1199px){
+.CAPCHA-new {
+	min-height: 180px; 
+	padding-top: 160px;
+}
+#agentLogo {
+	background: url(../images/logo.png) no-repeat center center;
+	background-size: 250px auto;
+}
+}
+@media screen and (max-width:899px){
+#loginRegion {
+	border-bottom: 2px solid #FFF;	
+    border-style:groove;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	margin-bottom: 2em;
+	padding-bottom: 2em;
+}
+
+#signupRegion {
+	border-left: none;
+}
+}
+
+@media screen and (min-width:1200px){
+
+#notificationBar, #mainTab {
+	margin: 1em 0 0 0;
+	margin-left:-20px;
+ 	margin-right:-20px;
+}
+
+#identification {
+	margin: 1em 0 0 0;
+	margin-left: -30px;
+ 	margin-right: -30px;
+}
+
+.CAPCHA-new {
+	min-height: 180px; 
+	padding-top: 160px;
+}
+}
