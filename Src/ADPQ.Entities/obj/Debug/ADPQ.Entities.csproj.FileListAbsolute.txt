@@ -1,0 +1,5 @@
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\bin\Debug\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\bin\Debug\ADPQ.Entities.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\obj\Debug\ADPQ.Entities.csprojResolveAssemblyReference.cache
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\obj\Debug\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\obj\Debug\ADPQ.Entities.pdb

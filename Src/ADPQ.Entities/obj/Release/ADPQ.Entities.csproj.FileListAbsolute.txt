@@ -1,0 +1,4 @@
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\bin\Release\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\bin\Release\ADPQ.Entities.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\obj\Release\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Entities\obj\Release\ADPQ.Entities.pdb
