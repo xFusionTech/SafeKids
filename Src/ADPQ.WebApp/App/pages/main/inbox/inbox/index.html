@@ -1,0 +1,74 @@
+﻿<div ng-controller="inboxMessageController" ng-init="updateInbox()">
+    <div class="row">
+        <form class="form-inline text-right" style="margin-top: 1em;" autocomplete="off">
+
+            <div class="form-group">
+                <label for="emailFilter">From</label>
+                <select class="form-control" ng-model="search.Message_To" id="emailFilter">
+                    <option value="">All</option>
+                    <option value="Joshua">Atkinson Family Services: Contact Person: <strong>Joshua Anderson</strong></option>
+                    <option value="Kevin">Case Worker: Contact Person: <strong> Kevin</strong></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
+        </form>
+    </div>
+
+    <table class="table emailTbl" style="border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Received Date/Time</th>
+                <th>Subject</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="message in messages | filter:search:strict">
+            <tr data-toggle="collapse" data-target="#{{message.Message_Header}}" class="accordion-toggle" ng-class="{'unread':{{!message.Message_IsRead}} }">
+                <td ng-click="markRead(message)">
+                    <span ng-if="message.Message_Type=='Out'">You</span>
+                    <span ng-if="message.Message_Type=='In'">{{message.Message_To}}</span>
+                </td>
+                <td ng-click="markRead(message)">
+                    <span ng-if="message.Message_Type=='In'">You</span>
+                    <span ng-if="message.Message_Type=='Out'">{{message.Message_To}}</span>
+                </td>
+                <td ng-click="markRead(message)">{{message.Message_Timestamp | date:'M/dd/yyyy - hh:mm a'}}</td>
+                <td ng-click="markRead(message)">{{message.Message_Subject}}</td>
+                <td><span class="glyphicon glyphicon-trash" aria-hidden="true" ng-click="remove(message)"></span></td>
+            </tr>
+            <tr class="emailBody">
+                <td colspan="4" class="hiddenRow">
+                    <div class="accordian-body collapse" id="{{message.Message_Header}}">
+                        <div class="emailMsg">
+                            {{message.Message_Body}}
+                        </div>
+                        <div ng-form="namesForm_{{$index}}" class="emailReply">
+                            <div class="form-group">
+                                <label for="emailBody">Reply:</label>
+                                <textarea class="form-control" name="input_{{$index}}_0" ng-model="textarea[$index]" id="emailBody" rows="3" required></textarea>
+                                <span class="text-danger" ng-show="namesForm_{{$index}}_submited && namesForm_{{$index}}.input_{{$index}}_0.$error.required">
+                                    Please enter message.
+                                </span>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-default">Clear</button>
+                                <button type="submit" class="btn btn-primary" ng-click="reply(message,$index);">Reply</button>
+                            </div>
+                        </div>
+                        <div ng-show="message.Message_HasThread" class="sub-section-header col-sm-12">Message Thread</div>
+                        <div ng-show="message.Message_HasThread" ng-repeat="thread in message.Message_Thread" ng-class-odd="'thread-odd'" ng-class-even="'thread-even'">
+                            <div class="thread-date">
+                                <span ng-if="thread.Message_Type=='Out'">You </span>
+                                <span ng-if="thread.Message_Type=='In'">{{thread.Message_To}} </span>
+                                wrote - {{thread.Message_Timestamp | date:'M/dd/yyyy - hh:mm a'}}
+                            </div>
+                            {{thread.Message_Body}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

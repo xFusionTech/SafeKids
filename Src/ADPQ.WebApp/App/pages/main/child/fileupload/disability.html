@@ -1,0 +1,6 @@
+﻿<div ng-controller="disabilityController as x">
+    <button class="btn btn-primary"  ngf-select="uploadFiles($file, $invalidFile)"
+            accept="application/pdf" ngf-max-height="1000" ngf-max-size="5MB" ng-disabled="c.childProfileDisable || c.child.disabilityInformation.UploadDocType == ''">
+        <i class="fa" ng-class="{'fa-circle-o-notch fa-spin fa-1x fa-fw':x.uploading,'fa-upload':!x.uploading}" aria-hidden="true"></i> Browse
+    </button>
+</div>

@@ -1,0 +1,122 @@
+﻿
+
+<div class="row" ng-controller="loginController as c">
+    <div class="col-md-6" id="loginRegion">
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                <h2>Login</h2>
+                <form name="loginform" ng-submit="c.authenticate()" novalidate autocomplete="off">
+                    <div class="form-group">
+                        <!--<label for="username">User Name</label>
+                        <input type="email" class="form-control input-lg" id="username">-->
+
+                        <label for="username">User Name</label>
+                        <input type="text" class="form-control input-lg" name="username" ng-model="c.loginObj.username" required />
+                        <span class="text-danger" ng-show="c.submitted && loginform.username.$error.required">Please enter a username.</span>
+                    </div>
+                    <!-- <div class="forgotLink"><a href="javascript:void(0)">I forgot</a></div> -->
+                    <div class="form-group">
+                        <!--<label for="password">Password</label>
+                        <input type="password" class="form-control input-lg" id="password">-->
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control input-lg" name="password" ng-model="c.loginObj.password" required />
+                        <span class="text-danger" ng-show="c.submitted && loginform.password.$error.required">Please enter a password.</span>
+                    </div>
+                  <!--   <div class="forgotLink"><a href="javascript:void(0)">I forgot</a></div> -->
+                    <div class="form-group" style="text-align:center">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="rememberme" ng-model="c.loginObj.rememberme" /> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group text-warning" ng-show="c.loginError">
+                        Incorrect username or password.
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Log In" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" id="signupRegion">
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                <h2>Sign Up</h2>
+                <form name="registerform" ng-submit="c.register()" novalidate autocomplete="off">
+                    <div class="form-group">
+                        <label for="username">First Name</label>
+                        <input type="text" class="form-control input-lg" name="firstname" ng-model="c.registerObj.firstname" required />
+                        <span class="text-danger" ng-show="c.rsubmitted && registerform.firstname.$error.required">Please enter a firstname.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Last Name</label>
+
+                        <input type="text" class="form-control input-lg" name="lastname" ng-model="c.registerObj.lastname" required />
+                        <span class="text-danger" ng-show="c.rsubmitted && registerform.lastname.$error.required">Please enter a lastname.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+
+                        <input type="email" class="form-control input-lg" name="pemail" ng-model="c.registerObj.email" ng-blur="c.checkEmail()" required ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" />
+                        <span class="text-danger" ng-show="c.rsubmitted && registerform.$invalid && c.emailRequired">Please enter a valid email.</span>
+						<span class="text-danger" ng-show="c.emailTaken">Email address already registered.</span>
+						
+                    </div>
+                    <div>You will receive a code to verify your identity.  Please choose the method to receive this code.</div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="email" name="notification" ng-checked="c.registerObj.method === 'email'" ng-click="c.notify('email')" /> Email
+                        </label>
+                        <label>
+                            <input type="radio" value="text" name="notification" ng-checked="c.registerObj.method === 'text'" ng-click="c.notify('text')" /> Text
+                        </label>
+                    </div>
+
+                    <!-- Form for emailing/texting code -->
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="col-xs-9" style="margin-left: -2px">
+                                <input type="email" class="form-control" name="email" placeholder="Email" ng-disabled="true" ng-model="c.registerObj.notifyEmail" ng-show="c.emailRequired" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-required="c.emailRequired" />
+                                <input type="text" class="form-control" name="text" placeholder="Text" ng-model="c.registerObj.text" ng-show="c.textRequired" ng-pattern="/^\d+$/" ng-required="c.textRequired" />
+                            </div>
+                            <input type="button" class="btn btn-primary btn-md" ng-disabled="!c.registerObj.notifyEmail && !c.registerObj.text" ng-click="c.send(c.registerObj.method,c.registerObj.notifyEmail,c.registerObj.text)" value="Send" />
+                        </div>
+                        <div class="form-group">
+                            <span class="text-danger" ng-show="c.rsubmitted &&  c.emailRequired">Please enter a valid email.</span>
+                            <span class="text-danger" ng-show="c.rsubmitted &&  c.textRequired">Please enter a text.</span>
+                        </div>
+                    </div>
+                    <div id="CodeRegion" style="margin-top: 15px" ng-show="c.displayCodeSection">
+                        <h4>Verification</h4>
+                        <p>The code has been sent to the {{c.defaultMethod}} you provided. Please enter the code in the box below.</p>
+                        <div class="col-sm-8" style="margin-left: -1em">
+                            <input type="text" class="form-control" name="code" placeholder="Enter Code"
+                                   ng-model="c.registerObj.code" ng-change="c.verifyCode()"  required />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group" style="text-align:center; margin-top: 3em;">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="terms" ng-model="c.registerObj.terms" required />
+                                I agree to the <a href="">Terms of Use</a> and <a href="">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <span class="text-danger" ng-show="c.rsubmitted && registerform.terms.$error.required">Please agree to the terms of use and privacy policy.</span>
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <input type="submit" class="btn btn-primary btn-lg" ng-disabled="!c.codeVerified || c.emailTaken" value="Sign Up" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

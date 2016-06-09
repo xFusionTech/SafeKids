@@ -1,0 +1,47 @@
+﻿<h4><strong>Send To</strong>:</h4>
+<form name="sendMessage" ng-controller="createController" novalidate autocomplete="off">
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" name="sendTo" id="optionsRadios1" ng-click="messageObj.sendTo='Joshua'" checked>
+                Atkinson Family Services, <strong>Contact Person</strong>: Joshua Anderson
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="sendTo" id="optionsRadios2" ng-click="messageObj.sendTo='Kevin'">
+                <strong>Case Worker</strong>: Kevin Jones
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="emailSubject">Subject:</label>
+        <input type="text"
+               class="form-control"
+               name="Subject"
+               ng-model="messageObj.Subject"
+               id="emailSubject"
+               required>
+        <span class="text-danger"
+              ng-show="submitted && sendMessage.Subject.$error.required">
+            Please enter subject.
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="emailBody">Message:</label>
+        <textarea class="form-control"
+                  name="Message"
+                  id="emailBody"
+                  ng-model="messageObj.Message"
+                  rows="15"
+                  required></textarea>
+        <span class="text-danger"
+              ng-show="submitted && sendMessage.Message.$error.required">
+            Please enter message.
+        </span>
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn btn-default">Clear</button>
+        <button type="submit" ng-click="save()" class="btn btn-primary">Submit</button>
+    </div>
+</form>

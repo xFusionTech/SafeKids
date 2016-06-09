@@ -1,0 +1,20 @@
+﻿<div class="container" ng-controller="mainController as c" >
+    <uib-tabset active="active">
+        <uib-tab  index="$index + 1" ng-repeat="tab in tabset" disable="tab.disabled" heading="{{tab.heading}}" headicon="{{tab.icon}}" select="c.loadTemplate(tab.page,$index)">
+            <ng:include src="($index === $parent.pageIndex) ? $parent.currentPage : ''" style="padding-top:10px"></ng:include>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<script type="text/javascript">
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+
+    $(document).on("keydown", function (e) {
+        if (e.which === 8 && !$(e.target).is("input, textarea, select")) {
+            e.preventDefault();
+        }
+    });
+
+</script>

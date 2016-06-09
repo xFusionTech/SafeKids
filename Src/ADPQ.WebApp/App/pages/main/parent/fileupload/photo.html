@@ -1,0 +1,5 @@
+﻿<div ng-controller="parentphotoController as x">
+    <button class="btn btn-primary" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/png,image/jpg,image/jpeg" ngf-max-height="5000" ngf-max-size="5MB" ng-disabled="c.enableEdit">
+        <i class="fa" ng-class="{'fa-circle-o-notch fa-spin fa-1x fa-fw':x.uploading,'fa-upload':!x.uploading}" aria-hidden="true"></i> Add Photo
+    </button>
+</div>

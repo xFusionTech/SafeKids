@@ -1,0 +1,542 @@
+﻿<style type="text/css">
+    .progress {
+        height: 8px;
+        width: 60%;
+        float: right;
+    }
+
+    .tooltip-inner {
+        max-width: 350px;
+        width: 350px; 
+    }
+</style>
+<div id="parentProfile" ng-controller="parentProfileController as c">
+    <uib-alert ng-show="c.validationError && c.isRegistering"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning! To complete your registration, you need to complete all required information.</uib-alert>
+    <uib-alert ng-show="c.validationError && !c.isRegistering"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning! You need to complete all required information.</uib-alert>
+    <uib-alert ng-show="c.formstatus.show" type="{{c.formstatus.type}}"><span class="glyphicon" ng-class="{'glyphicon-remove':(c.formstatus.type === 'danger'),'glyphicon-check':(c.formstatus.type === 'success')}"></span> {{c.formstatus.message}}</uib-alert>
+    <div class="section-header col-sm-12">Parent Information <button class="btn btn-primary pull-right" ng-show="!c.isRegistering" ng-click="c.enableEdit=false"><span class="glyphicon glyphicon-edit"></span> Edit</button></div>
+    <form name="parentform" novalidate autocomplete="off">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="parent-first-name" class="col-sm-3 control-label">First Name</label>
+                        <div class="col-sm-7">
+                            <input id="parent-first-name" class="form-control" type="text" name="firstname" ng-model="c.parentProfile.parent.firstname" ng-keyup="c.parentProfile.parent.firstname=c.helper.CharacterOnly(c.parentProfile.parent.firstname)" required ng-disabled="c.enableEdit" />
+                            <span class="text-danger" ng-show="c.submitted && parentform.firstname.$error.required">Please enter a first name.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parent-middle-name" class="col-sm-3 control-label">Middle Name</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" id="parent-middle-name" placeholder="Optional" type="text" name="middlename" ng-model="c.parentProfile.parent.middlename" ng-keyup="c.parentProfile.parent.middlename=c.helper.CharacterOnly(c.parentProfile.parent.middlename)" ng-disabled="c.enableEdit" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parent-last-name" class="col-sm-3 control-label">Last Name</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" id="parent-last-name" type="text" required name="lastname" ng-model="c.parentProfile.parent.lastname" ng-keyup="c.parentProfile.parent.lastname=c.helper.CharacterOnly(c.parentProfile.parent.lastname)" ng-disabled="c.enableEdit"  />
+                            <span class="text-danger" ng-show="c.submitted && parentform.lastname.$error.required">Please enter a Last name.</span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Close first column -->
+
+            <div class="col-sm-12 col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="parent-gender" class="col-sm-3 control-label">Gender</label>
+                        <div class="col-sm-8">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" ng-click="c.setGender('M')" value="M" ng-checked="c.parentProfile.parent.gender === 'M'" ng-disabled="c.enableEdit" /> Male
+                                </label>
+                                <label>
+                                    <input type="radio" value="F" name="gender" ng-checked="c.parentProfile.parent.gender === 'F'" ng-click="c.setGender('F')" ng-disabled="c.enableEdit" /> Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="parent-middle-name" class="col-sm-3 control-label">Social Security No.</label>
+                            <div class="col-sm-9 phone-number clearfix">
+                                <div class="col-xs-3">
+                                    <input type="password"
+                                           limit-to="3"
+                                           ng-minlength="3"
+                                           placeholder="XXX"
+                                           name="first"
+                                           id="first"
+                                           class="form-control"
+                                           ng-model="c.parentProfile.parent.social.first"
+                                           ng-keyup="c.parentProfile.parent.social.first=c.helper.NumberOnly(c.parentProfile.parent.social.first)"
+                                           required
+                                           next-element="middle"
+                                           ng-disabled="c.enableEdit"/>
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="password"
+                                           limit-to="2"
+                                           ng-minlength="2"
+                                           placeholder="XX"
+                                           name="middle"
+                                           id="middle"
+                                           class="form-control"
+                                           ng-model="c.parentProfile.parent.social.middle"
+                                           ng-keyup="c.parentProfile.parent.social.middle=c.helper.NumberOnly(c.parentProfile.parent.social.middle)"
+                                           required
+                                           next-element="last"
+                                           ng-disabled="c.enableEdit"/>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text"
+                                           limit-to="4"
+                                           ng-minlength="4"
+                                           placeholder="XXXX"
+                                           name="last"
+                                           id="last"
+                                           class="form-control"
+                                           ng-model="c.parentProfile.parent.social.last"
+                                           ng-keyup="c.parentProfile.parent.social.last=c.helper.NumberOnly(c.parentProfile.parent.social.last)"
+                                           required
+                                           ng-disabled="c.enableEdit"/>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-3 control-label">&nbsp;</label>
+                        <span class="text-danger col-sm-9" ng-show="c.submitted && (parentform.last.$error.minlength || parentform.last.$error.required || parentform.middle.$error.minlength ||  parentform.middle.$error.required || parentform.first.$error.minlength || parentform.first.$error.required)">Please enter SSN no. in XXX-XX-XXXX format</span>
+                    </div>
+
+                    <div class="sub-section-header col-sm-10">Photo(s)</div>
+                    <div class="row col-sm-10" id="parent-thumbnails">
+                        <span ng-show="c.ParentProfileList.length === 0"><i class="fa fa-picture-o" aria-hidden="true"></i> No Photo Uploaded.</span>
+                        <div class="col-xs-3" ng-repeat="file in c.ParentProfileList">
+                            <img data-ng-src="{{file.image}}" class="img-thumbnail img-responsive pull-left" style="margin-top:1px" alt="Profile image" width="100" height="100">
+                            <div class="photoIcon" ng-hide="c.enableEdit">
+                                <a href="{{file.image}}" data-toggle="lightbox" data-gallery="parentProfileList" class="pull-left"><span class="glyphicon glyphicon-search pointer" style="padding-right: 0em;" aria-hidden="true"></span></a>
+                                <button ng-click="c.DeleteFile(file.name,'Profile',$index)" ng-disabled="c.enableEdit" class="transparent pull-right"><span class="glyphicon glyphicon-trash pointer" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10" style="margin-top: 0.5em; padding-top: 0.5em; border-top: 2px solid #ccc; text-align: right;">
+                            <div ng-include="'/App/pages/main/parent/fileupload/photo.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Start: Contact Information  -->
+            <div class="section-header col-sm-12">Contact Information</div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="parent-home=phone" class="col-sm-3 control-label">Home Phone#</label>
+                            <div class="col-sm-9 phone-number">
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="hmiddle" limit-to="3" placeholder="000" name="hfirst" required ng-model="c.parentProfile.contact.home.first" ng-keyup="c.parentProfile.contact.home.first=c.helper.NumberOnly(c.parentProfile.contact.home.first)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="hlast" limit-to="3" placeholder="000" id="hmiddle" name="hmiddle" required ng-model="c.parentProfile.contact.home.middle" ng-keyup="c.parentProfile.contact.home.middle=c.helper.NumberOnly(c.parentProfile.contact.home.middle)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input class="form-control" type="text" ng-minlength="4" limit-to="4" placeholder="0000" id="hlast" name="hlast" required ng-model="c.parentProfile.contact.home.last" ng-keyup="c.parentProfile.contact.home.last=c.helper.NumberOnly(c.parentProfile.contact.home.last)" ng-disabled="c.enableEdit" />
+
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label">&nbsp;</label>
+                            <span class="text-danger col-sm-9" ng-show="c.submitted && (parentform.hlast.$error.minlength || parentform.hlast.$error.required || parentform.hmiddle.$error.minlength || parentform.hmiddle.$error.required || parentform.hfirst.$error.minlength || parentform.hfirst.$error.required)">Please enter home phone no. in XXX-XXX-XXXX format</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="parent-work-phone" class="col-sm-3 control-label">Work Phone#</label>
+                            <div class="col-sm-9 phone-number">
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="wmiddle" limit-to="3" placeholder="000" name="wfirst"  ng-model="c.parentProfile.contact.work.first" ng-keyup="c.parentProfile.contact.work.first=c.helper.NumberOnly(c.parentProfile.contact.work.first)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="wlast" limit-to="3" placeholder="000" id="wmiddle" name="wmiddle" ng-model="c.parentProfile.contact.work.middle" ng-keyup="c.parentProfile.contact.work.middle=c.helper.NumberOnly(c.parentProfile.contact.work.middle)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input class="form-control" type="text" ng-minlength="4" limit-to="4" placeholder="0000" id="wlast" name="wlast" ng-model="c.parentProfile.contact.work.last" ng-keyup="c.parentProfile.contact.work.last=c.helper.NumberOnly(c.parentProfile.contact.work.last)" ng-disabled="c.enableEdit" />
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label">&nbsp;</label>
+                            <span class="text-danger col-sm-9" ng-show="c.submitted && (parentform.wlast.$error.minlength || parentform.wmiddle.$error.minlength || parentform.wfirst.$error.minlength )">Please enter work phone no. in XXX-XXX-XXXX format</span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="parent-mobile-phone" class="col-sm-3 control-label">Mobile Phone#</label>
+                            <div class="col-sm-9 phone-number">
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="mmiddle" limit-to="3" placeholder="000" name="mfirst"  ng-model="c.parentProfile.contact.mobile.first" ng-keyup="c.parentProfile.contact.mobile.first=c.helper.NumberOnly(c.parentProfile.contact.mobile.first)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <input class="form-control" type="text" ng-minlength="3" next-element="mlast" limit-to="3" placeholder="000" id="mmiddle" name="mmiddle"  ng-model="c.parentProfile.contact.mobile.middle" ng-keyup="c.parentProfile.contact.mobile.middle=c.helper.NumberOnly(c.parentProfile.contact.mobile.middle)" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input class="form-control" type="text" ng-minlength="4" limit-to="4" placeholder="0000" name="mlast" id="mlast"  ng-model="c.parentProfile.contact.mobile.last" ng-keyup="c.parentProfile.contact.mobile.last=c.helper.NumberOnly(c.parentProfile.contact.mobile.last)" ng-disabled="c.enableEdit" />
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label">&nbsp;</label>
+                            <span class="text-danger col-sm-9" ng-show="c.submitted && (parentform.mlast.$error.minlength ||  parentform.mmiddle.$error.minlength ||  parentform.mfirst.$error.minlength)">Please enter mobile phone no. in XXX-XXX-XXXX format</span>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="parent-email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-6">
+                                <input type="email"
+                                       class="form-control"
+                                       name="email"
+                                       placeholder="Email"
+                                       ng-model="c.parentProfile.contact.email"
+                                       ng-show="c.emailRequired"
+                                       ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                                      ng-required="c.emailRequired" ng-disabled="c.enableEdit || c.isRegistering" />
+                                <span class="text-danger" ng-show="c.submitted && (c.parentProfile.contact.email.$error.required || parentform.email.$invalid)">Please enter a valid email.</span>
+                            </div>
+                            Ex. abc@xyz.com
+                        </div>
+
+                        <div class="form-group">
+                            <label for="best-time" class="col-sm-3 control-label">Best Time to Call</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="besttime" required ng-model="c.parentProfile.contact.bestTimeToCall" ng-disabled="c.enableEdit">
+                                    <option value="1">7:00 AM - 8:00 AM</option>
+                                    <option value="2">8:00 AM - 9:00 AM</option>
+                                    <option value="3">9:00 AM - 10:00 AM</option>
+                                    <option value="4">10:00 AM - 11:00 AM</option>
+                                    <option value="5">11:00 AM - 12:00 PM</option>
+                                    <option value="6">12:00 PM - 1:00 PM</option>
+                                    <option value="7">1:00 PM - 2:00 PM</option>
+                                    <option value="8">2:00 PM - 3:00 PM</option>
+                                    <option value="9">3:00 PM - 4:00 PM</option>
+                                    <option value="10">4:00 PM - 5:00 PM</option>
+                                </select>
+                            </div>
+                            <span class="text-danger" ng-show="c.submitted && parentform.besttime.$error.required">Please select best time.</span>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Close first column -->
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="sub-section-header col-sm-10" style="margin-bottom:1.5em;">Home Address</div>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="home-address1" class="col-sm-3 control-label">Street Address 1</label>
+                            <div class="col-sm-7">
+                                 <input class="form-control" required type="text" name="hstreet1" ng-model="c.parentProfile.contact.address.homeAddress.street1" ng-pattern="/(?=.*[a-zA-Z])/" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="c.submitted && parentform.hstreet1.$error.required">Please enter a street address 1.</span>
+                               <span class="text-danger" ng-show="c.submitted && parentform.hstreet1.$error.pattern">Can not contain only numerics</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home-address2" class="col-sm-3 control-label">Street Address 2</label>
+                            <div class="col-sm-7">
+                                   <input class="form-control" type="text" name="hstreet2" ng-model="c.parentProfile.contact.address.homeAddress.street2" ng-pattern="/(?=.*[a-zA-Z])/" ng-disabled="c.enableEdit" />
+                               <span class="text-danger" ng-show="c.submitted && parentform.hstreet2.$error.pattern">Can not contain only numerics</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home-city" class="col-sm-3 control-label">City</label>
+                            <div class="col-sm-5 col-md-4 col-lg-3">
+                                <input class="form-control" type="text" name="hcity" required
+                                       ng-model="c.parentProfile.contact.address.homeAddress.city"  ng-keyup="c.parentProfile.contact.address.homeAddress.city=c.helper.CharacterOnly(c.parentProfile.contact.address.homeAddress.city)" ng-disabled="c.enableEdit" />
+
+                            </div>
+                            <span class="text-danger" ng-show="c.submitted && parentform.hcity.$error.required">Please enter city</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home-state" class="col-sm-3 control-label">State</label>
+                            <div class="col-sm-5 col-md-4 col-lg-3">
+                                <input type="text" ng-disabled="true" class="form-control" name="hstate" required ng-model="c.parentProfile.contact.address.homeAddress.state" />
+                            </div>
+                            <span class="text-danger" ng-show="c.submitted && parentform.hstate.$error.required">Please enter state</span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="home-zip-code" class="col-sm-3 control-label">Zip</label>
+                            <div class="col-sm-7 zip-code clearfix">
+                                <div class="col-xs-5">
+                                    <input class="form-control" ng-minlength="5" limit-to="5" next-element="hziplast" type="text" name="hzipfirst" required ng-model="c.parentProfile.contact.address.homeAddress.zip.first"
+                                           ng-keyup="c.parentProfile.contact.address.homeAddress.zip.first=c.helper.NumberOnly(c.parentProfile.contact.address.homeAddress.zip.first)" ng-disabled="c.enableEdit"/>
+
+                                </div>
+                                <div class="col-xs-4">
+                                    <input class="form-control"
+                                           placeholder="Optional"
+                                           limit-to="4"
+                                           ng-minlength="4"
+                                           type="text"
+                                           required
+                                           name="hziplast"
+                                           id="hziplast"
+                                           ng-required="c.hziplast"
+                                           ng-model="c.parentProfile.contact.address.homeAddress.zip.last"
+                                           ng-blur="c.zipExtCheck('home',c.parentProfile.contact.address.homeAddress.zip.last)"
+                                           ng-keyup="c.parentProfile.contact.address.homeAddress.zip.last=c.helper.NumberOnly(c.parentProfile.contact.address.homeAddress.zip.last)" 
+                                           ng-disabled="c.enableEdit" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-9 clearfix pull-right">
+                                <span class="text-danger" ng-show="c.submitted && (parentform.hzipfirst.$error.required || parentform.hzipfirst.$error.minlength)">Please enter valid ZIP code</span>
+                                <span class="text-danger" ng-show="c.hziplast || parentform.hziplast.$error.minlength">Please enter valid ZIP ext</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section-header col-sm-10" style="margin-top: 1.5em">Mailing Address</div>
+                    <div class="form-group">
+                        <div class="col-sm-10" style="margin-bottom:1em;">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="mailing" value="same" ng-checked="c.parentProfile.contact.address.mailing === 'same'" ng-click="c.showMailing('same')"  ng-disabled="c.enableEdit"/> Same As Above
+                                </label>
+                                <label>
+                                    <input type="radio" name="mailing" value="other" ng-checked="c.parentProfile.contact.address.mailing === 'other'" ng-click="c.showMailing('other')" ng-disabled="c.enableEdit" /> Different From Home Address
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-horizontal" ng-hide="c.showmailing" id="mailingAddressForm">
+                        <div class="form-group">
+                            <label for="mailling-address1" class="col-sm-3 control-label">Street Address 1</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" name="mstreet1" ng-model="c.parentProfile.contact.address.mailingAddress.street1"
+                                       ng-required="c.parentProfile.contact.address.mailing === 'other'" ng-pattern="/(?=.*[a-zA-Z])(?=.*[0-9])/" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="c.submitted && parentform.mstreet1.$error.required">Please enter a Street Address 1</span>
+                                <span class="text-danger" ng-show="c.submitted && parentform.mstreet1.$error.pattern">Must contain alpha-numeric characters.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mailling-address2" class="col-sm-3 control-label">Street Address 2</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" name="mstreet2" ng-model="c.parentProfile.contact.address.mailingAddress.street2" ng-pattern="/(?=.*[a-zA-Z])(?=.*[0-9])/" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="c.submitted && parentform.mstreet2.$error.pattern">Must contain alpha-numeric characters.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mailling-city" class="col-sm-3 control-label">City</label>
+                            <div class="col-sm-5 col-md-4 col-lg-3">
+                                <input class="form-control" type="text" name="mcity"
+                                       ng-keyup="c.parentProfile.contact.address.mailingAddress.city=c.helper.CharacterOnly(c.parentProfile.contact.address.mailingAddress.city)"
+                                       ng-model="c.parentProfile.contact.address.mailingAddress.city"
+                                       ng-required="c.parentProfile.contact.address.mailing === 'other'" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="c.submitted && parentform.mcity.$error.required">Please enter City</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mailling-state" class="col-sm-3 control-label">State</label>
+                            <div class="col-sm-5 col-md-4 col-lg-3">
+                                <select class="form-control" name="mstate" ng-required="c.parentProfile.contact.address.mailing === 'other'" ng-model="c.parentProfile.contact.address.mailingAddress.state" ng-disabled="c.enableEdit" >
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <span class="text-danger" ng-show="c.submitted && parentform.mstate.$error.required">Please enter state</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="parent-zip-code" class="col-sm-3 control-label">Zip</label>
+                            <div class="col-sm-7 zip-code clearfix">
+                                <div class="col-xs-5">
+                                    <input class="form-control" type="text" ng-minlength="5" limit-to="5" next-element="mziplast" name="mzipfirst" ng-model="c.parentProfile.contact.address.mailingAddress.zip.first" ng-keyup="c.parentProfile.contact.mailingAddress.zip.first=c.helper.NumberOnly(c.parentProfile.contact.mailingAddress.zip.first)"
+                                           ng-required="c.parentProfile.contact.address.mailing === 'other'" ng-disabled="c.enableEdit" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input class="form-control" 
+                                           placeholder="Optional"
+                                           limit-to="4"
+                                           ng-minlength="4"
+                                           type="text" 
+                                           name="mziplast" 
+                                           id="mziplast" 
+                                           ng-required="c.parentProfile.contact.address.mailing === 'other' && c.mziplast"
+                                           ng-model="c.parentProfile.contact.address.mailingAddress.zip.last" 
+                                           ng-blur="c.zipExtCheck('mailing',c.parentProfile.contact.address.mailingAddress.zip.last)"
+                                           ng-keyup="c.parentProfile.contact.mailingAddress.zip.last=c.helper.NumberOnly(c.parentProfile.contact.mailingAddress.zip.last)" 
+                                           ng-disabled="c.enableEdit" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-9 clearfix pull-right">
+                                <span class="text-danger" ng-show="c.submitted && (parentform.mzipfirst.$error.required || parentform.mzipfirst.$error.minlength)">Please enter valid ZIP code</span>
+                                <span class="text-danger" ng-show="c.mziplast || parentform.mziplast.$error.minlength">Please enter valid ZIP ext</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start: Login Information  -->
+            <div class="section-header col-sm-12">Login Information</div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="user-name" class="col-sm-3 control-label">User Name</label>
+                            <div class="col-sm-5">
+                                <input class="form-control" ng-disabled="!c.isRegistering" type="text" required name="username" ng-blur="c.checkUsername()" ng-model="c.parentProfile.login.username" />
+                                <span class="text-danger" ng-show="c.submitted && parentform.username.$error.required">Please enter a username.</span>
+                                <span class="text-danger" ng-show="c.usernameTaken">Username already taken.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="c.changePassword">
+                            <label for="password-old" class="col-sm-3 control-label">Old Password</label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="password" ng-required="c.changePassword" name="oldpassword" ng-model="c.parentProfile.login.oldpassword" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="parentform.oldpassword.$error.required && parentform.oldpassword.$dirty && c.changePassword">Please enter your old password.</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" ng-hide="c.hideChangePassword || c.isRegistering" ng-disabled="c.enableEdit" ng-click="c.changePassword=true;c.hideChangePassword=true">Change Password</button>
+
+                        <div class="form-group" ng-show="c.isRegistering || c.changePassword">
+                            <label for="password-1" class="col-sm-3 control-label">Password <span class="glyphicon glyphicon-question-sign" tooltip-animation="true" uib-tooltip="Passwords must be between 8 and 20 characters and it must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)"  tooltip-placement="right-top"   aria-hidden="true"></span></label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="password" ng-keyup="c.passwordValidator(c.parentProfile.login.password)" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" ng-required="c.isRegistering" name="password" ng-model="c.parentProfile.login.password" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="parentform.password.$error.required && parentform.password.$dirty">Please enter a password.</span>
+                                <span class="text-danger" ng-show="!parentform.password.$error.required && (parentform.password.$error.minlength || parentform.password.$error.maxlength) && parentform.password.$dirty">Passwords must be between 8 and 20 characters.</span>
+                                <span class="text-danger" ng-show="!parentform.password.$error.required && !parentform.password.$error.minlength && !parentform.password.$error.maxlength && parentform.password.$error.pattern && parentform.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="c.isRegistering || c.changePassword">
+                            <div class="col-lg-8"><uib-progressbar value="passwordBar" type="{{passwordBarType}}"></uib-progressbar></div>
+                        </div>
+
+                        <div class="form-group" ng-show="c.isRegistering || c.changePassword">
+                            <label for="password-2" class="col-sm-3 control-label">Re-type Password</label>
+                            <div class="col-sm-5">
+                                <input class="form-control" type="password" name="retype" ng-keyup="c.passwordMatch()" ng-required="c.isRegistering" ng-model="c.parentProfile.login.retype" ng-disabled="c.enableEdit" />
+                                <span class="text-danger" ng-show="parentform.retype.$error.required && parentform.retype.$dirty">Please re-type your password.</span>
+                                <span class="text-danger" ng-show="!parentform.retype.$error.required && passwordBarType === 'danger' && parentform.password.$dirty">Passwords do not match.</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div> <!-- Close first column -->
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="secret-questions-1" class="col-sm-3 control-label">Secret Question 1</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="question1" required ng-model="c.parentProfile.login.question1" ng-options="item.id as item.question for item in c.questions" ng-disabled="c.enableEdit"></select>
+                                <span class="text-danger" ng-show="c.submitted && parentform.question1.$error.required">Please select secret question 1.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="answer-1" class="col-sm-3 control-label">Your Answer</label>
+                            <div class="col-sm-8">
+                                <input name="answer1" required class="form-control" ng-model="c.parentProfile.login.answer1" ng-disabled="c.enableEdit">
+                                <span class="text-danger" ng-show="c.submitted && parentform.answer1.$error.required">Please enter your answer.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="secret-questions-2" class="col-sm-3 control-label">Secret Question 2</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="question2" required ng-model="c.parentProfile.login.question2" ng-options="item.id as item.question for item in c.questions2" ng-disabled="c.enableEdit"></select>
+                                <span class="text-danger" ng-show="c.submitted && parentform.question2.$error.required">Please select secret question 2.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="answer-2" class="col-sm-3 control-label">Your Answer</label>
+                            <div class="col-sm-8">
+                                <input required name="answer2" class="form-control" ng-model="c.parentProfile.login.answer2" ng-disabled="c.enableEdit">
+                                <span class="text-danger" ng-show="c.submitted && parentform.answer2.$error.required">Please enter your answer.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header col-sm-12"></div>
+
+                <div class="row" ng-show="c.isRegistering">
+                    <div class="CAPCHA col-sm-8 col-sm-offset-0 col-md-6 col-md-offset-3">
+                        <div id="captcha"></div>
+                        <a class="pointer" captcha="{selector: '#captcha',width: 265,height: 150}">New Image</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group text-center">
+                <input type="button" ng-show="c.isRegistering" ng-click="c.saveParentProfile()" ng-disabled="c.parentProfile.captcha" class="btn btn-primary" value="Register" />
+                <input type="button" ng-show="!c.isRegistering" ng-click="c.updateParent()" confirm="Are you sure, you want to update ?" class="btn btn-primary" value="Update" ng-disabled="c.enableEdit" />
+            </div>
+        </div>
+    </form>
+</div>

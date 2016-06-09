@@ -1,0 +1,28 @@
+﻿<div role="tabpanel" class="tab-pane" id="inbox" ng-controller="inboxController">
+    <div class="row">
+        <div class="inboxRegion">
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation" ng-class="{'active':{{compose}} }"><a href="#main" ng-click="showCompose()" data-toggle="pill">Compose New Email</a></li>
+                <li role="presentation" ng-class="{'active':{{inbox}} }"><a href="#main" ng-click="showInbox()"  data-toggle="pill">Inbox <span class="badge">{{unreadCount}}</span></a></li>
+                <li role="presentation" ng-class="{'active':{{contacts}} }"><a href="#main" ng-click="showContacts()"  data-toggle="pill">Contact Info</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <!-- start: Message Inbox: Compose Message -->
+            <div role="tabpanel" class="tab-pane active" id="compose" ng-show="compose==true">
+                <div ng-include="'/App/pages/main/inbox/compose/index.html'" style="padding-top:10px"></div>
+            </div>
+
+            <!-- start: Message Inbox: Inbox -->
+            <div role="tabpanel" id="inboxMail" ng-show="inbox==true">
+                <div ng-include="'/App/pages/main/inbox/inbox/index.html'" style="padding-top:10px"></div>
+            </div>
+
+            <!-- start: Message Inbox: Contact Info -->
+            <div role="tabpanel" id="contact" ng-show="contacts==true">
+                <div ng-include="'/App/pages/main/inbox/contacts/index.html'" style="padding-top:10px"></div>
+            </div>
+        </div>
+    </div>
+</div>

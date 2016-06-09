@@ -1,0 +1,145 @@
+﻿<style>
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.angular-google-map-container {
+    width: 100%;
+    height: 400px;
+}
+
+/* fix for Twitter Bootstrap handling of responsive images */
+.angular-google-map img {
+    max-width: none;
+}
+
+.angular-google-map {
+    top: 80px;
+
+}
+
+.shrink {
+    font-size: 8;
+}
+
+.true:hover {
+    background-color: lightgreen;
+}
+
+.false:hover {
+    background-color: lightpink;
+}
+
+.marker-labels {
+    color: red;
+    background-color: white;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    white-space: nowrap;
+}
+
+/** FIX for Bootstrap and Google Maps Info window styes problem **/
+img[src*="gstatic.com/"], img[src*="googleapis.com/"] {
+  max-width: none;
+}
+
+
+/* uncomment this if you are using the <google-map> element instead of a div
+.angular-google-map {
+  display: block;
+  }*/
+
+.custom-info-window{
+    background: rgba(0,0,0,0.5);
+    color: white;
+    padding: 20px;
+    /*border: 1px solid white;*/
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    width: 200px;
+    margin-top: 15px;
+    margin-left: -130px;
+}
+.custom-info-window a{
+    color: white;
+    text-decoration: underline;
+}
+.custom-info-window:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 15px 15px;
+    border-color: rgba(0,0,0,0.5) transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -15px;
+    left: 118px;
+}
+
+</style>
+
+
+<div role="tabpanel" class="tab-pane" id="locator" ng-controller="locatorController">
+
+    <div class="row shadeBox">
+        <form class="form-inline" autocomplete="off">
+            <div class="form-group">
+                <label for="facility-search-criteria">To find a facility, enter a ZIP code</label>
+                <input type="text" class="form-control" ng-model="zip" id="facility-search-criteria">
+            </div>
+            <!--<div class="form-group">
+                <label for="radius">Look up within</label>
+                <select class="form-control" id="radius">
+                    <option value="5 Miles">5 Miles</option>
+                    <option value="10 Miles">10 Miles</option>
+                    <option value="25 Miles">25 Miles</option>
+                    <option value="50 Miles">50 Miles</option>
+                    <option value="75 Miles">75 Miles</option>
+                    <option value="100 Miles">100 Miles</option>
+                </select>
+            </div>-->
+            <button class="btn btn-primary" ng-click="addMarkers();"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+        </form>
+    </div>
+    <div class="row">
+        <div class="mapHolder">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" events="map.events">
+                <!--doCluster="map.doCluster"-->
+                <ui-gmap-markers models="searchResults.results" coords="'coords'" idkey="'key'" chunk="200"></ui-gmap-markers>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+
+    <div class="section-header col-sm-12">Search Results</div>
+    <div class="row" ng-show="searchResults.resultsAvailable">
+        <div class="table-responsive">
+            <table class="table table-hover searchResult">
+                <thead>
+                    <tr>
+                        <th>Facility Name</th>
+                        <th>Facility Address</th>
+                        <th>Contact Person</th>
+                        <th>Phone No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="facility in searchResults.resultsTable track by $index">
+                        <td>{{facility.name}}</td>
+                        <td>{{facility.address}}</td>
+                        <td>{{facility.caseworker}}</td>
+                        <td>{{facility.phonenumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" ng-show="!searchResults.resultsAvailable">
+        No Results found.
+    </div>
+
+</div>

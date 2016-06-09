@@ -1,0 +1,314 @@
+﻿<div id="childProfile" ng-controller="childProfileController as c">
+    <form name="childform" novalidate autocomplete="off">
+        <uib-alert ng-show="c.validationError"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Warning! You will have to fill up all required information.</uib-alert>
+        <uib-alert ng-show="c.formstatus.show" type="{{c.formstatus.type}}"><span class="glyphicon" ng-class="{'glyphicon-remove':(c.formstatus.type === 'danger'),'glyphicon-check':(c.formstatus.type === 'success')}"></span> {{c.formstatus.message}}</uib-alert>
+        <div class="row">
+            <div class="col-sm-2" style="padding-top	: 0.75em">
+                <button type="button" class="btn btn-primary pull-left" ng-click="c.addChild()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Child</button>
+            </div>
+            <div class="col-sm-10">
+                <div class="form-group" style="margin-top: 12px;">
+                    <label for="edit-child-profile" class="col-sm-3 col-sm-offset-4 control-label text-right" style="padding-top: 0.5em;">Child Profile</label>
+                    <div class="col-sm-4" style="padding-left: 0;">
+                        <select class="form-control" id="edit-child-profile" ng-model="c.child.childProfile" ng-change="c.getChildInfo()" ng-options="item.personname.PERS_ID as item.personname.PERS_FNAME +' ' + item.personname.PERS_LNAME +' - '+c.GetRelation(item.Relationship_Code) for item in c.child.childProfileLists">
+                        </select>
+                    </div>
+                    <div class="col-sm-1" style="padding-left: 0;">
+                        <button type="button" class="btn btn-primary" ng-click="c.childProfileDisable=false"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start: Child Information  -->
+        <div class="section-header col-sm-12">Child Information</div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="child-first-name-1" class="col-sm-3 control-label">First Name</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   name="firstname"
+                                   class="form-control"
+                                   id="child-first-name-1"
+                                   ng-model="c.child.childInformation.firstname"
+                                   ng-keyup="c.child.childInformation.firstname=c.helper.CharacterOnly(c.child.childInformation.firstname)"
+                                   required ng-disabled="c.childProfileDisable">
+                            <span class="text-danger"
+                                  ng-show="c.submitted && childform.firstname.$error.required">
+                                Please enter first name.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="child-middle-name-1" class="col-sm-3 control-label">Middle Name</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Optional"
+                                   id="child-middle-name-1"
+                                   ng-model="c.child.childInformation.middlename"
+                                   ng-keyup="c.child.childInformation.middlename=c.helper.CharacterOnly(c.child.childInformation.middlename)"
+                                   ng-disabled="c.childProfileDisable">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="child-last-name-1" class="col-sm-3 control-label">Last Name</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   name="lastname"
+                                   class="form-control"
+                                   id="child-last-name-1"
+                                   ng-model="c.child.childInformation.lastname"
+                                   ng-keyup="c.child.childInformation.lastname=c.helper.CharacterOnly(c.child.childInformation.lastname)"
+                                   ng-disabled="c.childProfileDisable" required>
+                            <span class="text-danger"
+                                  ng-show="c.submitted && childform.lastname.$error.required">
+                                Please enter last name.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- Close first column -->
+
+            <div class="col-sm-12 col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="child-gender-1" class="col-sm-3 control-label">Gender</label>
+                        <div class="col-sm-8">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="getChildGender1" value="M" ng-click="c.child.childInformation.gender='M'" ng-checked="c.child.childInformation.gender === 'M'" ng-disabled="c.childProfileDisable">
+                                    Male
+                                </label>
+                                <label>
+                                    <input type="radio" name="getChildGender1" value="F" ng-click="c.child.childInformation.gender='F'" ng-checked="c.child.childInformation.gender === 'F'" ng-disabled="c.childProfileDisable">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ethnicity" class="col-sm-3 control-label">Race / Ethnicity</label>
+                        <div class="col-sm-6">
+                            <select class="form-control"
+                                    name="ethnicity"
+                                    id="ethnicity"
+                                    ng-model="c.child.childInformation.ethnicity"
+                                    ng-options="item.id as item.name for item in c.child.ethnicityList"
+                                    ng-disabled="c.childProfileDisable" required></select>
+                            <span class="text-danger"
+                                  ng-show="c.submitted && childform.ethnicity.$error.required">
+                                Please select Race / Ethnicity
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="child-birthday-1" class="col-sm-3 control-label">Date of Birth</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="child-birthday-1" name="DOB" placeholder="Date of Birth" uib-datepicker-popup="{{c.format}}" ng-model="c.child.childInformation.dob" is-open="c.opened" datepicker-options="c.dateOptions" ng-required="true" close-text="Close" ng-click="c.openDatepicker()" ng-disabled="c.childProfileDisable" required>
+                            <span class="text-danger" ng-show="c.submitted && childform.DOB.$error.required">Please select date of birth</span>
+							<span class="text-danger" ng-show="childform.DOB.$error.date">Please enter the date in mm/dd/yyyy</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="parent-middle-name" class="col-sm-3 control-label">Social Security No.</label>
+                            <div class="col-sm-9 phone-number clearfix">
+                                <div class="col-xs-3">
+                                    <input type="password"
+                                           limit-to="3"
+                                           ng-minlength="3"
+                                           placeholder="XXX"
+                                           name="first"
+                                           id="first"
+                                           class="form-control"
+                                           ng-model="c.child.childInformation.social.first"
+                                           ng-keyup="c.child.childInformation.social.first=c.helper.NumberOnly(c.child.childInformation.social.first)"
+                                           required
+                                           next-element="middle"
+                                           ng-disabled="c.childProfileDisable" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="password"
+                                           limit-to="2"
+                                           ng-minlength="2"
+                                           placeholder="XX"
+                                           name="middle"
+                                           id="middle"
+                                           class="form-control"
+                                           ng-model="c.child.childInformation.social.second"
+                                           ng-keyup="c.child.childInformation.social.second=c.helper.NumberOnly(c.child.childInformation.social.second)"
+                                           required
+                                           next-element="last"
+                                           ng-disabled="c.childProfileDisable" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text"
+                                           limit-to="4"
+                                           ng-minlength="4"
+                                           placeholder="XXXX"
+                                           name="last"
+                                           id="last"
+                                           class="form-control"
+                                           ng-model="c.child.childInformation.social.third"
+                                           ng-keyup="c.child.childInformation.social.third=c.helper.NumberOnly(c.child.childInformation.social.third)"
+                                           required
+                                           ng-disabled="c.childProfileDisable" />
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-3 control-label">&nbsp;</label>
+                        <span class="text-danger col-sm-9" ng-show="c.submitted && (childform.first.$error.minlength || childform.first.$error.required || childform.middle.$error.minlength || childform.second.$error.required || childform.third.$error.minlength || childform.third.$error.required)">Please enter SSN no. in XXX-XXX-XXXX format</span>
+                    </div>
+
+                    <div class="sub-section-header col-sm-10">Photo(s)</div>
+                    <div class="row col-sm-10" id="parent-thumbnails">
+                        <span ng-show="c.child.ChildProfileList.length === 0"><i class="fa fa-picture-o" aria-hidden="true"></i> No Photo Uploaded.</span>
+                        <div class="col-xs-3"  ng-repeat="file in c.child.ChildProfileList">
+                            <img data-ng-src="{{file.image}}" class="img-thumbnail img-responsive pull-left" style="margin-top:1px" height="100" width="100" alt="Profile image" ng-disabled="c.childProfileDisable">
+                            <div class="photoIcon" ng-hide="c.childProfileDisable">
+
+                            <a href="{{file.image}}" data-toggle="lightbox" data-gallery="childProfileList" >
+                                <span class="glyphicon glyphicon-search pointer" aria-hidden="true" style="padding-right: 0em;"></span></a>
+                                <button ng-click="c.DeleteFile(file.name,'Profile',$index)" ng-disabled="c.childProfileDisable" class="transparent pull-right"><span class="glyphicon glyphicon-trash pointer" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <div class="row" >
+                        <div class="col-sm-10" style="margin-top: 0.5em; padding-top: 0.5em; border-top: 2px solid #ccc; text-align: right;">
+                            <div ng-include="'/App/pages/main/child/fileupload/photo.html'" ></div>
+                        </div>
+                    </div>
+                    <uib-alert type="success" ng-show="c.IsProfileUpload" dismiss-on-timeout="50" >File Uploaded Successfully !</uib-alert>
+                </div>
+            </div>
+
+            <!-- Start: Relationship Information  -->
+            <div class="section-header col-sm-12">Relationship Information</div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="child-relationship-1" class="col-sm-4 control-label">Relationship to this child</label>
+                            <div class="col-sm-5">
+                                <select class="form-control"
+                                        name="relation"
+                                        id="child-relationship-1"
+                                        ng-model="c.child.relationshipInformation.relation"
+                                        ng-options="item.id as item.name for item in c.child.relationList"
+                                        ng-disabled="c.childProfileDisable"></select>
+
+                            </div>
+                        </div>
+
+                        <div class="sub-section-header col-sm-10">Proof of Relationship Support Document(s)</div>
+                        <div class="row col-sm-10 tblList">
+                            <span ng-show="c.child.relationshipInformation.proofDocuments.length === 0"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> No Documents Uploaded.</span>
+                        </div>
+                        
+                        <div class="row col-sm-10 tblList" ng-repeat="file in c.child.relationshipInformation.proofDocuments" ng-disabled="c.childProfileDisable">
+                            <div class="col-sm-11">
+                                <p><strong>{{file.type}}</strong> - <a href="http://localhost:8085/api/FileUpload/?token={{userObject.result.TokenId}}&id={{userObject.result.PERS_ID}}&filename={{file.name}}" >{{file.filename}}</a></p>
+                            </div>
+                            <div class="col-sm-1" >
+                                <a ng-click="c.DeleteFile(file.name,'Relationship',$index)" ng-disabled="c.childProfileDisable" ng-hide="c.childProfileDisable"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            </div>
+                        </div>
+
+                        <div class="row col-sm-10" style="margin-top: 1em">
+                            <div class="form-group">
+                                <label for="child-upload-doc-1" class="col-sm-4 control-label" style="padding-top: 0.5em;">Upload Document</label>
+                                <div class="col-sm-6" style="padding-left: 0;">
+                                    <select class="form-control" id="child-relationship-1" ng-model="c.child.relationshipInformation.DocumentType" ng-disabled="c.childProfileDisable" ng-options="item.id as item.name for item in c.child.DocumentList"></select>
+                                </div>
+                                <div class="col-sm-1" style="padding-left: 0;">
+                                    <div ng-include="'/App/pages/main/child/fileupload/relationship.html'"></div>
+                                </div>
+                            </div>
+                            <uib-alert type="success" ng-show="c.IsRelationUpload"  close="c.closeAlert();">File Uploaded Successfully !</uib-alert>
+                            <uib-alert type="warning" ng-show="c.invalidRelationShipfile">File Uploaded is Not Valid or have exceeded the 5MB !</uib-alert>
+                        </div>
+                    </div>
+                </div> <!-- Close first column -->
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="sub-section-header col-sm-10">Genogram</div>
+                    <div class="text-center col-sm-10 col-sm-offset-2">
+                        <img src="/Content/Image/genogram.png" class="img-responsive" alt="Placeholder image">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Start: Disability Information  -->
+            <div class="section-header col-sm-12">Disability Information</div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="child-relationship-1" class="col-sm-4 control-label">Disability Type</label>
+                            <div class="col-sm-5">
+                                <select class="form-control"
+                                        name="disability"
+                                        id="child-relationship-1"
+                                        ng-model="c.child.disabilityInformation.type"
+                                        ng-options="item.id as item.name for item in c.child.disabilityList"
+                                        ng-disabled="c.childProfileDisable"></select>
+                            </div>
+                        </div>
+
+                        <div class="sub-section-header col-sm-10">Medical &amp; Diagnosis Support Document(s) </div>
+                        <div class="row col-sm-10 tblList">
+                            <span ng-show="c.child.disabilityInformation.documents.length === 0"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> No Documents Uploaded.</span>
+                        </div>
+                        <div class="row col-sm-10 tblList" ng-repeat="file in c.child.disabilityInformation.documents">
+                            <div class="col-sm-11">
+                                <p><strong>{{file.type}}</strong> - <a href="http://localhost:8085/api/FileUpload/?token={{userObject.result.TokenId}}&id={{userObject.result.PERS_ID}}&filename={{file.name}}">{{file.filename}}</a></p>
+                            </div>
+                            <div class="col-sm-1">
+                                <a ng-click="c.DeleteFile(file.name,'Disability',$index)"><span class="glyphicon glyphicon-trash" ng-hide="c.childProfileDisable" aria-hidden="true"></span></a>
+                            </div>
+                        </div>
+
+                        <div class="row col-sm-10" style="margin-top: 1em">
+                            <div class="form-group">
+                                <label for="child-upload-disable-doc-1" class="col-sm-4 control-label" style="padding-top: 0.5em;">Upload Document</label>
+                                <div class="col-sm-6" style="padding-left: 0;">
+
+                                    <select class="form-control" id="child-relationship-1" ng-disabled="c.childProfileDisable" ng-model="c.child.disabilityInformation.UploadDocType" ng-options="item.id as item.name for item in c.child.disabilityType"></select>
+                                </div>
+                                <div class="col-sm-1" style="padding-left: 0;">
+                                    <div ng-include="'/App/pages/main/child/fileupload/disability.html'"></div>
+                                </div>
+
+                            </div>
+                            <uib-alert type="success" ng-show="c.IsDisableUpload"  close="c.closeAlert();">File Uploaded Successfully !</uib-alert>
+                            <uib-alert type="warning" ng-show="c.invalidDisabilityfile">File Uploaded is Not Valid or have exceeded the 5MB !</uib-alert>
+                        </div>
+                    </div>
+                </div> <!-- Close first column -->
+
+            <div class="col-sm-12 col-md-6">
+                <div class="sub-section-header col-sm-10">Note</div>
+                <div class="form-group  col-sm-10">
+                    <textarea class="form-control" ng-model="c.child.disabilityInformation.note" ng-disabled="c.childProfileDisable" rows="8" id="note"></textarea>
+                </div>
+            </div>
+            <div class="section-header col-sm-12"></div>
+        </div>
+            <div class="row">
+                <div class="form-group text-center">
+                    <input type="button" ng-show="!c.isRegistering" ng-click="c.saveChildProfile()" ng-disabled="c.parentProfile.captcha" class="btn btn-primary" value="Save" />
+                    <input type="button" ng-show="c.isRegistering" ng-click="c.updateChild()" ng-disabled="c.childProfileDisable" class="btn btn-primary" value="Update" />
+                </div>
+            </div>
+        </div>
+</form>
+</div>
