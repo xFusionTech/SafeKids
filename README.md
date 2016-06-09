@@ -6,8 +6,8 @@
 SafeKids is a Child Welfare Digital Services (CWDS) platform with the goal to provide Children’s Residential Licensing, Case Management, Resource Management, Court Process, Eligibility and Financial Management functions electronically. 
 
 The SafeKids prototype phase includes the following business functions for the Biological/Adoption Parents:
-_*Sign-In;
-_*User Registration;
+_*Sign-In;_
+_*User Registration;_
 *Parent Profile Management;
 *Child(ren) profile Management;
 *Foster Care Facility Search; and
