@@ -1,0 +1,11 @@
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Business.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Business.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Data.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\EntityFramework.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Data.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\ADPQ.Entities.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Business\bin\Debug\EntityFramework.xml
+D:\xFusion\SafeKids\SRC\ADPQ.Business\obj\Debug\ADPQ.Business.csprojResolveAssemblyReference.cache
+D:\xFusion\SafeKids\SRC\ADPQ.Business\obj\Debug\ADPQ.Business.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Business\obj\Debug\ADPQ.Business.pdb
