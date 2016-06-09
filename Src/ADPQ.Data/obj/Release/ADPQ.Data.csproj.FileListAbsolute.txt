@@ -1,0 +1,12 @@
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\ADPQ.Data.dll.config
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\ADPQ.Data.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\ADPQ.Data.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\ADPQ.Entities.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\EntityFramework.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\EntityFramework.SqlServer.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\ADPQ.Entities.pdb
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\EntityFramework.xml
+D:\xFusion\SafeKids\SRC\ADPQ.Data\bin\Release\EntityFramework.SqlServer.xml
+D:\xFusion\SafeKids\SRC\ADPQ.Data\obj\Release\ADPQ.Data.csprojResolveAssemblyReference.cache
+D:\xFusion\SafeKids\SRC\ADPQ.Data\obj\Release\ADPQ.Data.dll
+D:\xFusion\SafeKids\SRC\ADPQ.Data\obj\Release\ADPQ.Data.pdb
